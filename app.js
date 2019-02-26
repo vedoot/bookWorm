@@ -13,22 +13,23 @@
  function traverseSite(options) {
   rp(options) // request promise
     .then(function(html) {
+      //WHY NO WORK?!?!?!
+      $('.text',html).remove();
+      ///WTF
       if (!$('.next-part-link', html).attr("href"))  // stops scraping when next link is undifined. Returns chapters as param for .then()
-        return chapters
-
-      var chapters = $('p', html).text();  // p tags on site store all book text.
+        return book
+      var chapters = $('p',html).text();  // p tags on site store all book text.
       book.push(chapters);  //moving pages into chapters array
 
-      console.log(`Chapter ${book.length} added to book!`);
+      console.log(`Downloaded chapter ${book.length}`)
 
-      return traverseSite({ url: $('.next-part-link', html).attr("href"),
+    return traverseSite({ url: $('.next-part-link', html).attr("href"),
       headers: { 'Referer': $('.next-part-link', html).attr("href"),'User-Agent': uA }
       });
     })
     .then(function cleanText(book) {
       if(Array.isArray(book))
-        console.log(book.toString());
-
+        console.log(`Enjoy \n\n\n ${book.toString()}`);
     })
     .then(function formatText(cleanBook){
 
