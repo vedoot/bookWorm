@@ -18,7 +18,7 @@
       if (!$('.next-part-link', html).attr("href"))  // stops scraping when next link is undifined. Returns chapters as param for .then()
         return book
 
-      var chapters = $('pre').text();
+      var chapters = $('pre').eq(0).text();
          // p tags on site store all book text.
       book.push(chapters);  //moving pages into chapters array
 
