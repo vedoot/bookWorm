@@ -1,0 +1,40 @@
+/// <reference types="node" />
+import * as JSZip from "jszip";
+import { FooterReferenceType } from "../file/document/body/section-properties/footer-reference";
+import { HeaderReferenceType } from "../file/document/body/section-properties/header-reference";
+import { FooterWrapper, IDocumentFooter } from "../file/footer-wrapper";
+import { HeaderWrapper, IDocumentHeader } from "../file/header-wrapper";
+import { Styles } from "../file/styles";
+interface IDocumentRefs {
+    readonly headers: Array<{
+        readonly id: number;
+        readonly type: HeaderReferenceType;
+    }>;
+    readonly footers: Array<{
+        readonly id: number;
+        readonly type: FooterReferenceType;
+    }>;
+}
+interface IRelationshipFileInfo {
+    readonly id: number;
+    readonly target: string;
+    readonly type: "header" | "footer" | "image" | "hyperlink";
+}
+export interface IDocumentTemplate {
+    readonly currentRelationshipId: number;
+    readonly headers: IDocumentHeader[];
+    readonly footers: IDocumentFooter[];
+    readonly styles: Styles;
+    readonly titlePageIsDefined: boolean;
+}
+export declare class ImportDotx {
+    private currentRelationshipId;
+    constructor();
+    extract(data: Buffer): Promise<IDocumentTemplate>;
+    addRelationToWrapper(relationhipFile: IRelationshipFileInfo, zipContent: JSZip, wrapper: HeaderWrapper | FooterWrapper): Promise<void>;
+    findReferenceFiles(xmlData: string): IRelationshipFileInfo[];
+    extractDocumentRefs(xmlData: string): IDocumentRefs;
+    titlePageIsDefined(xmlData: string): boolean;
+    parseRefId(str: string): number;
+}
+export {};
