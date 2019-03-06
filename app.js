@@ -49,31 +49,35 @@
          doc.addParagraph(empty);
        });
        packer.toBuffer(doc).then((buffer) => {
-         fs.writeFileSync(`freeB00k.docx`, buffer);
+         fs.writeFileSync(`${$('.title.h5').text()}.docx`, buffer);
        });
 
        console.log($('.next-part-link', html).attr("href") + i);
 
        if (!$('.next-part-link', html).attr("href")) {
-         fs.readFile('freeB00k.docx', (err, data) => {
-           docxConverter('freeB00k.docx', 'output.pdf', function(err, result) {
+         fs.readFile(`${$('.title.h5').text()}.docx`, (err, data) => {
+           docxConverter(`${$('.title.h5').text()}.docx`, `${$('.title.h5').text()}.pdf`, function(err, result) {
              if (err) {
                console.log(console.log(err));
              }
              console.log('result' + result);
            });
-          });
-         return;
-       } else {
-         i++;
-         return traverseSite({
-           url: $('.next-part-link', html).attr("href"),
-           headers: {
-             'Referer': $('.next-part-link', html).attr("href"),
-             'User-Agent': uA
-           },
          });
+         fs.unlink(`${$('.title.h5').text()}.docx`, (err) => {
+           if (err) throw err;
+           console.log('path/file.txt was deleted');
+         });
+         return;
        }
+       i++;
+       return traverseSite({
+         url: $('.next-part-link', html).attr("href"),
+         headers: {
+           'Referer': $('.next-part-link', html).attr("href"),
+           'User-Agent': uA
+         },
+       });
+
      })
      .catch(console.log);
  }
