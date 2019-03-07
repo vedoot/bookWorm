@@ -11,11 +11,11 @@
  } = docx;
 
  const uA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36';
-
+ var bookURL='https://www.wattpad.com/30050160';
  var options = {
-   url: 'https://www.wattpad.com/30050160-forever-judy-blume',
+   url: bookURL,
    headers: {
-     'Referer': 'https://www.wattpad.com/30050160-forever-judy-blume',
+     'Referer': bookURL,
      'User-Agent': uA
    }
  };
