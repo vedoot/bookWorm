@@ -10,6 +10,7 @@
    Packer
  } = docx;
 
+//Might need to change user agent. Book url is the starting address of the text you want to scrape
  const uA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36';
  var bookURL='https://www.wattpad.com/30050160';
  var options = {
@@ -23,7 +24,6 @@
  var doc = new docx.Document();
  var packer = new docx.Packer();
  var empty = new docx.Paragraph(`\n`);
- var i = 0;
 
  function traverseSite(options) {
    rp(options) // request promise
@@ -52,7 +52,7 @@
          fs.writeFileSync(`${$('.title.h5').text()}.docx`, buffer);
        });
 
-       console.log($('.next-part-link', html).attr("href") + i);
+       console.log($('.next-part-link', html).attr("href"));
 
        if (!$('.next-part-link', html).attr("href")) {
          fs.readFile(`${$('.title.h5').text()}.docx`, (err, data) => {
@@ -69,7 +69,7 @@
          });
          return;
        }
-       i++;
+
        return traverseSite({
          url: $('.next-part-link', html).attr("href"),
          headers: {
