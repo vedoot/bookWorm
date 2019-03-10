@@ -1,4 +1,5 @@
 # bookWorm
 
-Scrapes wattpad.com to and downloads text as pdf. 
+Scrapes wattpad.com using cheerios and requests to download text as pdf. 
+
 
